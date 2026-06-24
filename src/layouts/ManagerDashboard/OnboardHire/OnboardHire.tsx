@@ -3,8 +3,14 @@ import styles from "./OnboardHire.module.scss";
 import { useForm } from "react-hook-form";
 import type { OnboardHireProps,OnboardHireFormProps } from "./OnboardHire.types";
 import { SecondaryButton } from "../../../components/Button/Button";
+import { useOnboardHireMutation } from "./OnboardHire.services";
 
 const onboardHire = ({handleSetOnboardHire}:OnboardHireProps) => {
+
+  //rtk hooks
+  const [ onboardHireState, onboardHire] = useOnboardHireMutation()
+
+  // useForm
   const { register, handleSubmit, formState: { errors } } = useForm<OnboardHireFormProps>({
     defaultValues: {
       email: '',
@@ -14,8 +20,9 @@ const onboardHire = ({handleSetOnboardHire}:OnboardHireProps) => {
     mode: "onChange"
   })
 
-  const handleOnSubmit = () =>{
-    console.log("onsubmit");
+  const handleOnSubmit = async(hireData:OnboardHireFormProps) =>{
+    const response = await onboardHire(hireData);
+    console.log(response.data);
   }
 
   const handleCancel = () =>{
@@ -25,7 +32,7 @@ const onboardHire = ({handleSetOnboardHire}:OnboardHireProps) => {
   }
   return (
     <section className={styles.background}>
-      <form action="" className={styles.form} onSubmit={handleOnSubmit}>
+      <form action="" className={styles.form} onSubmit={handleSubmit(handleOnSubmit)}>
         <div className={styles.heading}>
           <h2>Onboard New Hires</h2>
         </div>

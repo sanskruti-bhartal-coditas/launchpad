@@ -6,7 +6,7 @@ const Container = ({onboardState,handleSetOnboardHire}:ContainerProps) => {
   return(
     <section className={styles.container}>
       {
-        onboardState && <OnboardHire />
+        onboardState && <OnboardHire handleSetOnboardHire={handleSetOnboardHire}/>
       }
     </section>
   )
