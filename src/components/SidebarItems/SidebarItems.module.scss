@@ -1,0 +1,12 @@
+@use "../../css/theme" as *;
+
+.sideBarItem{
+  min-height: auto;
+  padding: 0.75rem;
+  background-color: $second-color;
+  margin: 0.5rem;
+  border-radius: 4px;
+  &:hover{
+    @include jump-effect
+  }
+}

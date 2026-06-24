@@ -1,0 +1,12 @@
+@use "../../../css/theme" as *;
+
+.background{
+  background-color: $background;
+  padding: 1rem;
+  border: thin solid $border-color;
+}
+
+.form{
+  // width: 50%;
+  padding: 1rem 2rem;
+}

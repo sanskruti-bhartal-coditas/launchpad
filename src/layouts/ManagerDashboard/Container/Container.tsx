@@ -1,9 +1,13 @@
 import styles from "./Container.module.scss";
+import type { ContainerProps } from "./Container.types";
+import OnboardHire from "../OnboardHire/OnboardHire"
 
-const Container = () => {
+const Container = ({onboardState}:ContainerProps) => {
   return(
-    <section>
-
+    <section className={styles.container}>
+      {
+        onboardState && <OnboardHire/>
+      }
     </section>
   )
 }
