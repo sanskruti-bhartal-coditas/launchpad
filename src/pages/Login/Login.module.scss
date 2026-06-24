@@ -25,7 +25,8 @@
 
 .inputGroup{
   margin: 1rem;
-  @include flex-center
+  @include grid-center;
+  grid-template-row : 1fr 1fr;
 }
 
 .errorMessage{
