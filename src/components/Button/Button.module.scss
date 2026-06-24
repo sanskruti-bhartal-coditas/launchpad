@@ -1,0 +1,29 @@
+@use "../../css/theme" as *;
+
+.button {
+  padding: 0.5rem;
+  border: thin solid $border-color;
+  border-radius: 4px;
+  color: $btn-text;
+  &:hover {
+    @include jump-effect;
+    cursor: pointer;
+  }
+}
+
+.primaryButton {
+  background-color: $first-color;
+  
+}
+
+.secondaryButton{
+  background-color: $second-color;
+}
+
+.tertiaryButton{
+  background-color: $third-color;
+}
+
+.deleteButton{
+  background-color: $error;
+}
