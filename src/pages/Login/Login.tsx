@@ -23,6 +23,8 @@ const Login = () => {
   const onSubmit = async(data:LoginInterface) => {
     const response = await login(data)
     console.log(response.data)
+
+    //store accesstoken here
   }
 
   return (
