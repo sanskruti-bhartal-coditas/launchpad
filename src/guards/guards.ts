@@ -1,7 +1,10 @@
 import type { Predicate } from "../routes/routes";
 
 export const isUserLoggedIn:Predicate = () =>{
-// if token exists return true, else false
+  const token = JSON.parse(localStorage.getItem('accessToken'));
+  if(!token) return false
+
+  return true;
 }
 
 type Roles = "HIRE" | "MANAGER" | "HR-COORDINATOR";

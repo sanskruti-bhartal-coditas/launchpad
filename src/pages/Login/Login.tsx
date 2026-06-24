@@ -2,8 +2,9 @@ import { useForm } from "react-hook-form";
 import { PrimaryButton } from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import styles from "./Login.module.scss";
-import type { LoginInterface } from "./Login.types";
+import type { LoginInterface, LoginResponse } from "./Login.types";
 import { useLoginMutation } from "./Login.services";
+import { isExpired, decodeToken } from "react-jwt";
 
 const Login = () => {
 
@@ -20,11 +21,16 @@ const Login = () => {
   })
 
   // handlers 
-  const onSubmit = async(data:LoginInterface) => {
-    const response = await login(data)
-    console.log(response.data)
+  const onSubmit = async(userData:LoginInterface) => {
+    const response = await login(userData);
+    localStorage.setItem('accessToken', JSON.stringify(response.data?.accessToken))
 
-    //store accesstoken here
+    // decode token to access role
+    const decodedToken : string | null = decodeToken(response.data?.accessToken);
+    localStorage.setItem('role', JSON.stringify(decodedToken?.role))
+
+    console.log(response.data);
+    console.log(JSON.parse(localStorage.getItem('role')));
   }
 
   return (
@@ -70,10 +76,6 @@ const Login = () => {
               {...register("password",
                 {
                   required: "*Password is required",
-                  maxLength: {
-                    value: 6,
-                    message: "*Minimum password length is 6"
-                  }
                 })}
             />
             {/* error messages  */}

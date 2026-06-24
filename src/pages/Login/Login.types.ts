@@ -5,7 +5,9 @@ export interface LoginInterface {
 
 
 export interface LoginResponse {
-  error:{
+  accessToken?:string,
+  refreshToken?:string,
+  error?:{
     message:string
   }
 }

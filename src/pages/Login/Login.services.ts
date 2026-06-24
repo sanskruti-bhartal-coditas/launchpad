@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { getFetchBaseQuery } from "../../services/app.services";
-import type { LoginInterface } from "./Login.types";
+import type { LoginInterface, LoginResponse } from "./Login.types";
 
  export const loginApi = createApi({
   reducerPath: 'loginApi',
@@ -8,7 +8,7 @@ import type { LoginInterface } from "./Login.types";
 
   endpoints: (builder) => ({
 
-    login : builder.mutation<void, LoginInterface>({
+    login : builder.mutation<LoginResponse, LoginInterface>({
       query: (user) => ({
         url: 'auth/login',
         method: 'POST',

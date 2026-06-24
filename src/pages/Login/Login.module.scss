@@ -24,8 +24,7 @@
 }
 
 .inputGroup{
-  margin: 1rem;
-  @include grid-center;
+  @include inputGroup;
   grid-template-row : 1fr 1fr;
 }
 

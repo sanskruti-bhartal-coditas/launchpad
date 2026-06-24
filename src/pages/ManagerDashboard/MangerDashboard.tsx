@@ -9,7 +9,7 @@ const MangerDashboard = () =>{
     <section className={styles.background}>
       <SideBar handleSetOnboardHire = {setOnboardHire}/>
 
-      <Container onboardState={isOnboardHireOpen}/>
+      <Container onboardState={isOnboardHireOpen} handleSetOnboardHire = {setOnboardHire}/>
     </section>
   )
 }
