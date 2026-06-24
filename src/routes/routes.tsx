@@ -1,5 +1,6 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import Login from "../pages/Login/Login";
+import MangerDashboard from "../pages/ManagerDashboard/MangerDashboard";
 
 export type Predicate = () => boolean;
 
@@ -19,5 +20,9 @@ export const router = createBrowserRouter([
   {
     path:"/",
     Component: Login
+  },
+  {
+    path: "/manager",
+    Component: MangerDashboard
   }
 ])
