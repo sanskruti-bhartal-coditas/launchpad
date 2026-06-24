@@ -1,0 +1,38 @@
+@use "../../css/theme" as *;
+
+.background{
+  @include grid-center;
+  min-height: 100vh;
+  background-color: $light-grey;
+  padding: 10rem;
+}
+
+.container{
+  // height: 100%;
+  padding: 2rem 4rem;
+  width: 60%;
+  background-color: $background;
+  border: $border-color;
+  border-radius: 4px;
+  box-shadow: $box-shadow;
+}
+
+.heading{
+  color: $first-color;
+  padding: 1rem;
+  @include flex-center
+}
+
+.inputGroup{
+  margin: 1rem;
+  @include grid-center;
+  grid-template-row : 1fr 1fr;
+}
+
+.errorMessage{
+  @include error-message
+}
+
+.successMessage{
+  @include success-message
+}
