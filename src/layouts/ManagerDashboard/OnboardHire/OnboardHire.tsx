@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import type { OnboardHireProps,OnboardHireFormProps } from "./OnboardHire.types";
 import { SecondaryButton } from "../../../components/Button/Button";
 import { useOnboardHireMutation } from "./OnboardHire.services";
+import { getUserData } from "../../../services/getUserData.services";
 
 const OnboardHire = ({handleSetOnboardHire}:OnboardHireProps) => {
 
@@ -11,25 +12,21 @@ const OnboardHire = ({handleSetOnboardHire}:OnboardHireProps) => {
   const [ onboardHire, onboardHireState] = useOnboardHireMutation()
 
   // useForm
-  const { register, handleSubmit, formState: { errors } } = useForm<OnboardHireFormProps>({
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm<OnboardHireFormProps>({
     defaultValues: {
       email: '',
       name: '',
-      managerId: '',
       password:'',
-      role:''
+      role:'',
+      managerId:'',
     },
     mode: "onChange"
   })
 
   const handleOnSubmit = async(hireData:OnboardHireFormProps) =>{
-    console.log(hireData);
-    console.log("before");
-    
+    const userData = await getUserData();
+    // setValue("managerId", userData.managerId)
     const response = await onboardHire(hireData);
-
-    console.log("after");
-    console.log(response.data);
   }
 
   const handleCancel = () =>{

@@ -7,7 +7,7 @@ export interface OnboardHireFormProps {
   password: string,
   name: string,
   role: string,
-  managerId: string,
+  managerId?: string,
 }
 
 export interface OnboardHireResponse{

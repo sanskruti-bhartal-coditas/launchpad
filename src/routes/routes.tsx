@@ -3,13 +3,15 @@ import Login from "../pages/Login/Login";
 import MangerDashboard from "../pages/ManagerDashboard/MangerDashboard";
 import OnboardHire from "../layouts/ManagerDashboard/OnboardHire/OnboardHire";
 import { isUserLoggedIn, hasGrantedAccess } from "../guards/guards";
+import type React from "react";
+// import { NewHireStats } from "../layouts/ManagerDashboard/NewHireStats/NewHireStats"
 
 export type Predicate = () => boolean;
 
-const canAccess = (Component: React.ComponentType, guards: Predicate[], to: string = '/'): React.ComponentType => {
+const canAccess = (Component: React.FC, guards: Predicate[], to: string = '/'): React.ComponentType => {
   return () => {
-
-    if (!guards.every(guard => guard())) {
+    
+    if (!guards.every(guard => guard)) {
       return <Navigate to={to} />;
     }
 
@@ -28,9 +30,13 @@ export const router = createBrowserRouter([
     Component: canAccess(MangerDashboard, [isUserLoggedIn, hasGrantedAccess("MANAGER")]),
     children: [
       {
-        path: "onboard-new-hire",
+        path: "/dashboard/onboard-new-hire",
         Component: canAccess(OnboardHire, [isUserLoggedIn, hasGrantedAccess("MANAGER")]),
       },
+      // {
+      //   path: "new-hire-stats",
+      //   Component: canAccess(NewHireStats, [isUserLoggedIn, hasGrantedAccess("MANAGER")]),
+      // }
     ],
-  }
+  },
 ])

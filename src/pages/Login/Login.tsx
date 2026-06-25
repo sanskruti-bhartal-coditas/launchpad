@@ -5,11 +5,10 @@ import styles from "./Login.module.scss";
 import type { LoginInterface } from "./Login.types";
 import { useLoginMutation } from "./Login.services";
 import { useNavigate } from "react-router-dom";
-// import { useGetUserDataQuery } from "../../services/getUserData.services";
 import { getUserData } from "../../services/getUserData.services";
 
-const ROLE_ROUTES = {
-  MANAGER: "/dashboard",
+const ROLE_ROUTES: Record<string, string> = {
+  "MANAGER": "/dashboard",
 };
 
 const Login = () => {
@@ -18,7 +17,6 @@ const Login = () => {
 
   // redux hooks
   const [login, loginState] = useLoginMutation()
-  // const {data} = useGetUserDataQuery();
 
   // react hook form 
   const { register, handleSubmit, formState: { errors } } = useForm<LoginInterface>({
@@ -35,14 +33,12 @@ const Login = () => {
     const response = await login(userData);
     localStorage.setItem('accessToken', JSON.stringify(response.data?.accessToken))
 
-    console.log(JSON.parse(localStorage.getItem('accessToken')));
-    
-
     const userDetails = await getUserData();
     console.log(userDetails);
+    
+    const role = userDetails.role
 
-    // navigate(route);
-
+    navigate(ROLE_ROUTES[role]);
   };
 
   return (

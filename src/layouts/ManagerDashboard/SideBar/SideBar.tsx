@@ -19,10 +19,16 @@ const SideBar = ({handleSetOnboardHire}:SideBarProps) => {
   const handleLogout = () => {
     dispatch(logout())
   }
+
+  const handleHireStats = () =>{
+
+  }
   return (
     <section className={styles.background}>
-      <SidebarItems cardTitle="Approval Queue" handleOnClick={handleApprovalQueueClick} />
-      <SidebarItems cardTitle="Onboard new hire" handleOnClick={handleOnboardHireClick} />
+      <SidebarItems cardTitle="Approval Queue" 
+      handleOnClick={handleApprovalQueueClick} />
+      <SidebarItems cardTitle="Onboard New Hire" handleOnClick={handleOnboardHireClick} />
+      <SidebarItems cardTitle="New Hire Stats " handleOnClick={handleHireStats} />
       <SidebarItems cardTitle="Logout" handleOnClick={handleLogout} />
     </section>
   )
