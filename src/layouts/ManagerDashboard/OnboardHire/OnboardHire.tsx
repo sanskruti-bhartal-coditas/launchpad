@@ -8,20 +8,27 @@ import { useOnboardHireMutation } from "./OnboardHire.services";
 const onboardHire = ({handleSetOnboardHire}:OnboardHireProps) => {
 
   //rtk hooks
-  const [ onboardHireState, onboardHire] = useOnboardHireMutation()
+  const [ onboardHire, onboardHireState] = useOnboardHireMutation()
 
   // useForm
   const { register, handleSubmit, formState: { errors } } = useForm<OnboardHireFormProps>({
     defaultValues: {
       email: '',
       name: '',
-      managerId: ''
+      managerId: '',
+      password:'',
+      role:''
     },
     mode: "onChange"
   })
 
   const handleOnSubmit = async(hireData:OnboardHireFormProps) =>{
+    console.log(hireData);
+    
+    console.log("before");
+    
     const response = await onboardHire(hireData);
+    console.log("after");
     console.log(response.data);
   }
 
@@ -45,7 +52,7 @@ const onboardHire = ({handleSetOnboardHire}:OnboardHireProps) => {
           </div>
 
           <Input
-            type="email"
+            type="text"
             placeholder="Enter email..."
             {...register("email",
               {
@@ -69,6 +76,32 @@ const onboardHire = ({handleSetOnboardHire}:OnboardHireProps) => {
             type="text"
             placeholder="Enter name..."
             {...register("name", { required: "*Name is required" })}
+          />
+        </div>
+
+        <div className={styles.inputGroup}>
+          <div>
+            {errors.password && 
+              <p className={styles.errorMessage}>{errors.password.message}</p>
+            }
+          </div>
+          <Input
+            type="text"
+            placeholder="Enter password..."
+            {...register("password", { required: "*Password is required" })}
+          />
+        </div>
+
+        <div className={styles.inputGroup}>
+          <div>
+            {errors.role && 
+              <p className={styles.errorMessage}>{errors.role.message}</p>
+            }
+          </div>
+          <Input
+            type="text"
+            placeholder="Enter role..."
+            {...register("role", { required: "*role is required" })}
           />
         </div>
 

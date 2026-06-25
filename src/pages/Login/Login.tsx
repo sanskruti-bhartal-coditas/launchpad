@@ -2,9 +2,9 @@ import { useForm } from "react-hook-form";
 import { PrimaryButton } from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import styles from "./Login.module.scss";
-import type { LoginInterface, LoginResponse } from "./Login.types";
+import type { LoginInterface } from "./Login.types";
 import { useLoginMutation } from "./Login.services";
-import { isExpired, decodeToken } from "react-jwt";
+import { decodeToken } from "react-jwt";
 
 const Login = () => {
 
@@ -29,8 +29,8 @@ const Login = () => {
     const decodedToken : string | null = decodeToken(response.data?.accessToken);
     localStorage.setItem('role', JSON.stringify(decodedToken?.role))
 
-    console.log(response.data);
-    console.log(JSON.parse(localStorage.getItem('role')));
+    // console.log(response.data);
+    // console.log(JSON.parse(localStorage.getItem('role')));
   }
 
   return (

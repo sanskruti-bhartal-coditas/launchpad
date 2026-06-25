@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { getFetchBaseQuery } from "../../../services/app.services";
-import type { OnboardHireFormProps } from "./OnboardHire.types"
+import type { OnboardHireFormProps, OnboardHireResponse } from "./OnboardHire.types"
 
  export const onboardHireApi = createApi({
   reducerPath: 'onboardHireApi',
@@ -8,9 +8,9 @@ import type { OnboardHireFormProps } from "./OnboardHire.types"
 
   endpoints: (builder) => ({
 
-    onboardHire : builder.mutation<void, OnboardHireFormProps>({
+    onboardHire : builder.mutation<OnboardHireResponse, OnboardHireFormProps>({
       query: (user) => ({
-        url: 'hires',
+        url: 'auth/users',
         method: 'POST',
         body: user,
       })
