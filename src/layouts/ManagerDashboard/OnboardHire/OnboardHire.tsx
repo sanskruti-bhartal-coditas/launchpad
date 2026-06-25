@@ -5,7 +5,7 @@ import type { OnboardHireProps,OnboardHireFormProps } from "./OnboardHire.types"
 import { SecondaryButton } from "../../../components/Button/Button";
 import { useOnboardHireMutation } from "./OnboardHire.services";
 
-const onboardHire = ({handleSetOnboardHire}:OnboardHireProps) => {
+const OnboardHire = ({handleSetOnboardHire}:OnboardHireProps) => {
 
   //rtk hooks
   const [ onboardHire, onboardHireState] = useOnboardHireMutation()
@@ -24,10 +24,10 @@ const onboardHire = ({handleSetOnboardHire}:OnboardHireProps) => {
 
   const handleOnSubmit = async(hireData:OnboardHireFormProps) =>{
     console.log(hireData);
-    
     console.log("before");
     
     const response = await onboardHire(hireData);
+
     console.log("after");
     console.log(response.data);
   }
@@ -127,4 +127,4 @@ const onboardHire = ({handleSetOnboardHire}:OnboardHireProps) => {
   )
 }
 
-export default onboardHire;
+export default OnboardHire;

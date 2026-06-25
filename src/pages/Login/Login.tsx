@@ -4,12 +4,21 @@ import Input from "../../components/Input/Input";
 import styles from "./Login.module.scss";
 import type { LoginInterface } from "./Login.types";
 import { useLoginMutation } from "./Login.services";
-import { decodeToken } from "react-jwt";
+import { useNavigate } from "react-router-dom";
+// import { useGetUserDataQuery } from "../../services/getUserData.services";
+import { getUserData } from "../../services/getUserData.services";
+
+const ROLE_ROUTES = {
+  MANAGER: "/dashboard",
+};
 
 const Login = () => {
 
+  const navigate = useNavigate()
+
   // redux hooks
   const [login, loginState] = useLoginMutation()
+  // const {data} = useGetUserDataQuery();
 
   // react hook form 
   const { register, handleSubmit, formState: { errors } } = useForm<LoginInterface>({
@@ -21,17 +30,20 @@ const Login = () => {
   })
 
   // handlers 
-  const onSubmit = async(userData:LoginInterface) => {
+  const onSubmit = async (userData: LoginInterface) => {
+
     const response = await login(userData);
     localStorage.setItem('accessToken', JSON.stringify(response.data?.accessToken))
 
-    // decode token to access role
-    const decodedToken : string | null = decodeToken(response.data?.accessToken);
-    localStorage.setItem('role', JSON.stringify(decodedToken?.role))
+    console.log(JSON.parse(localStorage.getItem('accessToken')));
+    
 
-    // console.log(response.data);
-    // console.log(JSON.parse(localStorage.getItem('role')));
-  }
+    const userDetails = await getUserData();
+    console.log(userDetails);
+
+    // navigate(route);
+
+  };
 
   return (
     <section className={styles.background}>
@@ -83,7 +95,7 @@ const Login = () => {
               {errors.password &&
                 <p className={styles.errorMessage}>{errors.password.message}</p>
               }
-              {loginState.isError && 
+              {loginState.isError &&
                 <p className={styles.errorMessage}>{loginState.data?.error.message}</p>
               }
             </div>

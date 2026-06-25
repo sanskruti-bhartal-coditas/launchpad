@@ -17,7 +17,7 @@ const SideBar = ({handleSetOnboardHire}:SideBarProps) => {
   }
 
   const handleLogout = () => {
-    // dispatch(logout)
+    dispatch(logout())
   }
   return (
     <section className={styles.background}>

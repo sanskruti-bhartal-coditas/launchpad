@@ -1,6 +1,8 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import Login from "../pages/Login/Login";
 import MangerDashboard from "../pages/ManagerDashboard/MangerDashboard";
+import OnboardHire from "../layouts/ManagerDashboard/OnboardHire/OnboardHire";
+import { isUserLoggedIn, hasGrantedAccess } from "../guards/guards";
 
 export type Predicate = () => boolean;
 
@@ -22,7 +24,13 @@ export const router = createBrowserRouter([
     Component: Login
   },
   {
-    path: "/manager",
-    Component: MangerDashboard
+    path: "/dashboard",
+    Component: canAccess(MangerDashboard, [isUserLoggedIn, hasGrantedAccess("MANAGER")]),
+    children: [
+      {
+        path: "onboard-new-hire",
+        Component: canAccess(OnboardHire, [isUserLoggedIn, hasGrantedAccess("MANAGER")]),
+      },
+    ],
   }
 ])

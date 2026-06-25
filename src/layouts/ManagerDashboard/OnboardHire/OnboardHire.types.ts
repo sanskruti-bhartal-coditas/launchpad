@@ -2,14 +2,12 @@ export interface OnboardHireProps {
   handleSetOnboardHire: (state: boolean) => void
 }
 
-type Roles = 'NEW_HIRE' | 'MANAGER' | 'HR'; 
-
 export interface OnboardHireFormProps {
   email: string,
-  name: string,
-  managerId: string,
   password: string,
-  role: Roles,
+  name: string,
+  role: string,
+  managerId: string,
 }
 
 export interface OnboardHireResponse{
