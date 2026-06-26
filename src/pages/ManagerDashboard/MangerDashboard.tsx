@@ -4,12 +4,11 @@ import SideBar from "../../layouts/ManagerDashboard/SideBar/SideBar";
 import styles from "./MangerDashboard.module.scss";
 
 const MangerDashboard = () =>{
-  const [isOnboardHireOpen, setOnboardHire] = useState(false)
   return(
     <section className={styles.background}>
-      <SideBar handleSetOnboardHire = {setOnboardHire}/>
+      <SideBar/>
 
-      <Container onboardState={isOnboardHireOpen} handleSetOnboardHire = {setOnboardHire}/>
+      <Container/>
     </section>
   )
 }

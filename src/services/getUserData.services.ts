@@ -1,8 +1,8 @@
 export async function getUserData() {
   try {
-    const token = JSON.parse(localStorage.getItem('accessToken') ?? "")
+    const token = JSON.parse(localStorage.getItem('accessToken') ?? "null")
 
-    const response = await fetch("https://xhkrpfff-5000.inc1.devtunnels.ms/auth/me", {
+    const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}auth/me`, {
       headers: {
        Authorization: `Bearer ${token}`,
       }

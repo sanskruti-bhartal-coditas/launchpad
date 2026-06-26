@@ -1,7 +1,7 @@
 import type { Predicate } from "../routes/routes";
 
 export const isUserLoggedIn:Predicate = () =>{
-  const token = JSON.parse(localStorage.getItem('accessToken')?? " ") ;
+  const token = JSON.parse(localStorage.getItem('accessToken')?? "null") ;
   if(!token) return false
 
   return true;
@@ -10,9 +10,8 @@ export const isUserLoggedIn:Predicate = () =>{
 type Roles = "HIRE" | "MANAGER" | "HR";
 
 export const hasGrantedAccess = (role:Roles) =>{
-  // return true
   return ()=>{
-    const userRole = JSON.parse(localStorage.getItem('role') ?? '');
+    const userRole = JSON.parse(localStorage.getItem('role') ?? "null");
 
     if(role.includes(userRole)) {
       return true;

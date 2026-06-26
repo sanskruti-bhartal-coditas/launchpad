@@ -1,7 +1,7 @@
 import { fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 export const getFetchBaseQuery =  fetchBaseQuery({
-    baseUrl: "https://xhkrpfff-5000.inc1.devtunnels.ms/",
+    baseUrl: import.meta.env.VITE_API_BASE_URL,
     prepareHeaders: (headers) => {
     const token = JSON.parse(localStorage.getItem("accessToken") ?? "null");
     

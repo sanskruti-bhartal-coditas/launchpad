@@ -1,8 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { LoginInterface } from '../pages/Login/Login.types';
+
+interface User{
+  email:string,
+  name:string,
+  role:string,
+  id:string
+}
 
 interface AuthState {
-  user : LoginInterface | null,
+  user : User | null,
   isAuthenticated : boolean
 }
 
@@ -15,7 +21,7 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    login: (state, action) => {
+    saveUserData: (state, action) => {
       state.isAuthenticated = true;
       state.user = action.payload;
     },
@@ -26,6 +32,6 @@ export const authSlice = createSlice({
   },
 });
 
-export const { login, logout } = authSlice.actions;
+export const { saveUserData, logout } = authSlice.actions;
 
 export default authSlice.reducer;

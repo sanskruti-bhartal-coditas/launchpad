@@ -6,6 +6,7 @@ import type { OnboardHireFormProps, OnboardHireResponse } from "./OnboardHire.ty
   reducerPath: 'onboardHireApi',
   baseQuery : getFetchBaseQuery,
 
+
   endpoints: (builder) => ({
 
     onboardHire : builder.mutation<OnboardHireResponse, OnboardHireFormProps>({
@@ -13,8 +14,9 @@ import type { OnboardHireFormProps, OnboardHireResponse } from "./OnboardHire.ty
         url: 'auth/users',
         method: 'POST',
         body: user,
-      })
+      }),
     })
+
   })
 })
 

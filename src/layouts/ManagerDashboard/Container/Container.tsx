@@ -1,13 +1,10 @@
 import styles from "./Container.module.scss";
-import type { ContainerProps } from "./Container.types";
-import OnboardHire from "../OnboardHire/OnboardHire"
+import { Outlet } from "react-router-dom";
 
-const Container = ({ onboardState, handleSetOnboardHire }: ContainerProps) => {
+const Container = () => {
   return (
     <section className={styles.container}>
-      {
-        onboardState && <OnboardHire handleSetOnboardHire={handleSetOnboardHire} />
-      }
+      <Outlet />
     </section>
   )
 }

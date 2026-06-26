@@ -6,6 +6,8 @@ import type { LoginInterface } from "./Login.types";
 import { useLoginMutation } from "./Login.services";
 import { useNavigate } from "react-router-dom";
 import { getUserData } from "../../services/getUserData.services";
+import { saveUserData } from "../../redux/authSlice";
+import { useDispatch } from "react-redux";
 
 const ROLE_ROUTES: Record<string, string> = {
   "MANAGER": "/dashboard",
@@ -14,7 +16,8 @@ const ROLE_ROUTES: Record<string, string> = {
 const Login = () => {
 
   const navigate = useNavigate()
-
+  const dispatch = useDispatch()
+ 
   // redux hooks
   const [login, loginState] = useLoginMutation()
 
@@ -30,15 +33,25 @@ const Login = () => {
   // handlers 
   const onSubmit = async (userData: LoginInterface) => {
 
-    const response = await login(userData);
-    localStorage.setItem('accessToken', JSON.stringify(response.data?.accessToken))
+    try {
+      const response = await login(userData).unwrap();
+      localStorage.setItem('accessToken', JSON.stringify(response.accessToken))
 
-    const userDetails = await getUserData();
-    console.log(userDetails);
-    
-    const role = userDetails.role
+      const userDetails = await getUserData();
+      console.log(userDetails);
 
-    navigate(ROLE_ROUTES[role]);
+      dispatch(saveUserData(userDetails))
+
+      const role = userDetails.role
+      localStorage.setItem('role', JSON.stringify(role));
+
+      if (role) {
+        navigate(ROLE_ROUTES[role]);
+      }
+    } catch (error) {
+      console.log("Login failed");
+
+    }
   };
 
   return (
@@ -91,9 +104,11 @@ const Login = () => {
               {errors.password &&
                 <p className={styles.errorMessage}>{errors.password.message}</p>
               }
-              {loginState.isError &&
-                <p className={styles.errorMessage}>{loginState.data?.error.message}</p>
-              }
+              {loginState.isError && (
+                <p className={styles.errorMessage}>
+                  Login failed
+                </p>
+              )}
             </div>
           </div>
 
