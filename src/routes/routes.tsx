@@ -5,6 +5,7 @@ import OnboardHire from "../layouts/ManagerDashboard/OnboardHire/OnboardHire";
 import { isUserLoggedIn, hasGrantedAccess } from "../guards/guards";
 import type React from "react";
 import NewHireStats  from "../layouts/ManagerDashboard/NewHireStats/NewHireStats"
+import HireDashboard from "../pages/HireDashboard/HireDashboard";
 
 export type Predicate = () => boolean;
 
@@ -39,4 +40,8 @@ export const router = createBrowserRouter([
       }
     ],
   },
+  {
+    path:"/dashboard2",
+    Component:canAccess(HireDashboard, [isUserLoggedIn, hasGrantedAccess("NEW_HIRE")])
+  }
 ])

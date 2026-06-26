@@ -9,7 +9,7 @@ export const isUserLoggedIn: Predicate = () => {
   return true;
 }
 
-type Roles = "HIRE" | "MANAGER" | "HR";
+type Roles = "NEW_HIRE" | "MANAGER" | "HR";
 
 export const hasGrantedAccess = (role: Roles) => {
   return () => {
