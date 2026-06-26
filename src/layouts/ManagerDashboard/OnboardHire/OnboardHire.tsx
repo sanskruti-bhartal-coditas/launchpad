@@ -23,7 +23,7 @@ const OnboardHire = () => {
   const [onboardHire, onboardHireState] = useOnboardHireMutation()
 
   // useForm
-  const { register, handleSubmit, formState: { errors } } = useForm<OnboardHireFormProps>({
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<OnboardHireFormProps>({
     defaultValues: {
       email: '',
       name: '',
@@ -48,10 +48,7 @@ const OnboardHire = () => {
 
       setSuccessMessage("New hire onboarded successfully!");
 
-      // to give some delay before closing the modal
-      setTimeout(() => {
-      navigate("/dashboard");
-    }, 1500);
+      reset()
 
 
     } catch (error: any) {
@@ -80,12 +77,6 @@ const OnboardHire = () => {
         </div>
 
         <div className={styles.inputGroup}>
-          <div>
-            {errors.email &&
-              <p className={styles.errorMessage}>{errors.email.message}</p>
-            }
-          </div>
-
           <Input
             type="text"
             placeholder="Enter email..."
@@ -98,46 +89,63 @@ const OnboardHire = () => {
                 }
               })}
           />
+           <div>
+            {errors.email &&
+              <p className={styles.errorMessage}>{errors.email.message}</p>
+            }
+          </div>
 
         </div>
 
         <div className={styles.inputGroup}>
-          <div>
-            {errors.name &&
-              <p className={styles.errorMessage}>{errors.name.message}</p>
-            }
-          </div>
+        
           <Input
             type="text"
             placeholder="Enter name..."
             {...register("name", { required: "*Name is required" })}
           />
+
+          <div>
+            {errors.name &&
+              <p className={styles.errorMessage}>{errors.name.message}</p>
+            }
+          </div>
         </div>
 
         <div className={styles.inputGroup}>
-          <div>
-            {errors.password &&
-              <p className={styles.errorMessage}>{errors.password.message}</p>
-            }
-          </div>
+          
           <Input
             type="password"
             placeholder="Enter password..."
             {...register("password", { required: "*Password is required" })}
           />
+
+          <div>
+            {errors.password &&
+              <p className={styles.errorMessage}>{errors.password.message}</p>
+            }
+          </div>
         </div>
 
         <div className={styles.inputGroup}>
+
+          <select className={styles.select} 
+            defaultValue="select-role"
+          {...register("role", {
+            required:"*Pick a role"
+          })}
+          >
+            <option value="select-role" disabled>Select Role:</option>
+            <option value="NEW_HIRE">New Hire</option>
+            <option value="MANAGER">Manager</option>
+            <option value="HR">HR</option>
+          </select>
+
           <div>
             {errors.role &&
               <p className={styles.errorMessage}>{errors.role.message}</p>
             }
           </div>
-          <Input
-            type="text"
-            placeholder="Enter role..."
-            {...register("role", { required: "*Role is required" })}
-          />
         </div>
 
         <div className={styles.buttonGroup}>

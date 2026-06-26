@@ -12,6 +12,14 @@
 .form{
   padding: 2rem 6rem;
 }
+.select {
+  background-color: $input;
+  color: $black;
+  border: thin solid $grey;
+  padding: 0.25rem;
+  border-radius: 4px;
+  width: 100%;
+}
 
 .heading{
   color: $first-color;

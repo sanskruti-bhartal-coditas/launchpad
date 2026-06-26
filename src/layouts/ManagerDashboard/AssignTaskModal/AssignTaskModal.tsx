@@ -13,10 +13,9 @@ interface AssignTaskModalProps {
 
 const AssignTaskModal = ({ hireId, onClose }: AssignTaskModalProps) => {
   const [assignTask, { isLoading }] = useAssignTaskMutation();
-  const [successMsg, setSuccessMsg] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<AssignTask>({
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<AssignTask>({
     defaultValues: {
       hireId: hireId,
       title: "",
@@ -31,13 +30,8 @@ const AssignTaskModal = ({ hireId, onClose }: AssignTaskModalProps) => {
   const onSubmit = async (data: AssignTask) => {
     setErrorMsg(null);
     try {
-      await assignTask(data).unwrap();
-      setSuccessMsg("Task assigned successfully!");
-
-      setTimeout(() => {
-        reset();
-        onClose();
-      }, 1500);
+      await assignTask({...data , requiresApproval  : true});
+      reset()
 
     } catch (err) {
       setErrorMsg("Failed to assign task. Please try again.");
@@ -52,7 +46,6 @@ const AssignTaskModal = ({ hireId, onClose }: AssignTaskModalProps) => {
           <h2>Assign Custom Task</h2>
         </div>
 
-        {successMsg && <p className={styles.successMessage}>{successMsg}</p>}
         {errorMsg && <p className={styles.errorMessage}>{errorMsg}</p>}
 
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -72,9 +65,12 @@ const AssignTaskModal = ({ hireId, onClose }: AssignTaskModalProps) => {
             <Input
               type="number"
               placeholder="Order"
-              {...register("order", { required: "*Description is required" })}
-            />
-            {errors.order && <p className={styles.errorMessage}>{errors.order.message}</p>}
+              {...register("order", { 
+                required: "*Order is required",
+                valueAsNumber:true
+              })}
+              />
+              {errors.order && <p className={styles.errorMessage}>{errors.order.message}</p>}
           </div>
 
           <div className={styles.inputGroup}>
@@ -83,9 +79,11 @@ const AssignTaskModal = ({ hireId, onClose }: AssignTaskModalProps) => {
               // defaultValue="select-type"
               {...register("type", { required: "*Type is required" })}>
               {/* <option value="select-type" disabled>Select type</option> */}
-              <option value="ACKNOWLEDGEMENT">Acknowledgement</option>
+              <option value="ACKNOWLEDGE">Acknowledgement</option>
               <option value="UPLOAD">Document Upload</option>
               <option value="FORM">Approval Form</option>
+              <option value="REQUEST">Request</option>
+              <option value="BOOKING">Booking</option>
             </select>
             {errors.type && <p className={styles.errorMessage}>{errors.type.message}</p>}
           </div>
@@ -103,10 +101,16 @@ const AssignTaskModal = ({ hireId, onClose }: AssignTaskModalProps) => {
             <label className={styles.label} htmlFor="requiresApproval">Requires Approval</label>
             
             <label htmlFor="">Yes</label>
-            <input name="approval" type="radio" value="true" />
+            <input 
+            {...register("requiresApproval")} 
+            type="radio" 
+            value="true" />
 
             <label htmlFor="">No</label>
-            <input name="approval" type="radio" value="false" />
+            <input 
+            {...register("requiresApproval")}
+            type="radio" 
+            value="false" />
             {errors.requiresApproval && <p className={styles.errorMessage}>{errors.requiresApproval.message}</p>}
           </div>
 

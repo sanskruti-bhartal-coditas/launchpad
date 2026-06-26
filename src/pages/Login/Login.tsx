@@ -17,7 +17,7 @@ const Login = () => {
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
- 
+
   // redux hooks
   const [login, loginState] = useLoginMutation()
 
@@ -38,15 +38,11 @@ const Login = () => {
       localStorage.setItem('accessToken', JSON.stringify(response.accessToken))
 
       const userDetails = await getUserData();
-      console.log(userDetails);
 
       dispatch(saveUserData(userDetails))
 
-      const role = userDetails.role
-      localStorage.setItem('role', JSON.stringify(role));
-
-      if (role) {
-        navigate(ROLE_ROUTES[role]);
+      if (userDetails.role) {
+        navigate(ROLE_ROUTES[userDetails.role]);
       }
     } catch (error) {
       console.log("Login failed");
@@ -68,13 +64,6 @@ const Login = () => {
           <div className={styles.inputGroup}>
 
             {/* validation messages */}
-            <div >
-              {errors.email &&
-                <p className={styles.errorMessage}>
-                  {errors.email.message}
-                </p>
-              }
-            </div>
 
             <Input
               type="email"
@@ -88,6 +77,13 @@ const Login = () => {
                   }
                 })}
             />
+            <div >
+              {errors.email &&
+                <p className={styles.errorMessage}>
+                  {errors.email.message}
+                </p>
+              }
+            </div>
           </div>
 
           <div className={styles.inputGroup}>

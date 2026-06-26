@@ -28,7 +28,7 @@ const NewHireStats = () => {
   return (
     <section className={styles.container}>
       <div className={styles.heading}>
-        <h2>My Team</h2>
+        <h2>New Hire Stats</h2>
       </div>
 
       {!hires ? (
