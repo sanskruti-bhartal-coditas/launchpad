@@ -1,14 +1,29 @@
+import { useState } from "react";
 import StatsCard from "../StatsCard/StatsCard";
 import { useGetHiresQuery } from "../NewHireStats/NewHireStats.service";
 import styles from "./NewHireStats.module.scss";
-import Fallback from "../../../components/Fallback/Fallback";
+import AssignTaskModal from "../AssignTaskModal/AssignTaskModal";
 
 const NewHireStats = () => {
 
   const { data: hires, isLoading, isError } = useGetHiresQuery();
 
-  if (isLoading) return <Fallback text="Loading team stats..."/>;
-  if (isError) return <Fallback text="Failed to load team data."/>;
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [selectedHireId, setSelectedHireId] = useState<string | null>(null);
+
+  const handleCardClick = (hireId: string) => {
+    setSelectedHireId(hireId);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedHireId(null);
+  };
+
+
+  if (isLoading) return <div className={styles.loading}>Loading team stats...</div>;
+  if (isError) return <div className={styles.error}>Failed to load team data.</div>;
 
   return (
     <section className={styles.container}>
@@ -17,19 +32,25 @@ const NewHireStats = () => {
       </div>
 
       {!hires ? (
-        <Fallback text="You have not hired anyone yet"/>
+        <div className={styles.loading}>You have not hired anyone yet</div>
       ) : (
         <div className={styles.grid}>
           {hires.map((hire) => (
             <StatsCard 
               key={hire.id} 
               hire={hire} 
-              onClick={()=>{}} 
+              onClick={handleCardClick} 
             />
           ))}
         </div>
       )}
 
+      {isModalOpen && selectedHireId && (
+        <AssignTaskModal 
+          hireId={selectedHireId} 
+          onClose={handleCloseModal} 
+        />
+      )}
     </section>
   );
 };

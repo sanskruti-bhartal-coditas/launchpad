@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Container from "../../layouts/ManagerDashboard/Container/Container";
 import SideBar from "../../layouts/ManagerDashboard/SideBar/SideBar";
 import styles from "./MangerDashboard.module.scss";

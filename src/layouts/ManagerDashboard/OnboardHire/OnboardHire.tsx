@@ -13,7 +13,9 @@ const OnboardHire = () => {
 
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
+
   const navigate = useNavigate()
+
   const currentUser = useSelector((state: RootState) => state.auth.user);
   console.log("Current User Data:", currentUser);
 
@@ -46,13 +48,14 @@ const OnboardHire = () => {
 
       setSuccessMessage("New hire onboarded successfully!");
 
+      // to give some delay before closing the modal
       setTimeout(() => {
       navigate("/dashboard");
     }, 1500);
 
 
     } catch (error: any) {
-      setSubmitError(error?.data?.message || "Failed to onboard new hire. Please try again.");
+      setSubmitError("Failed to onboard new hire. Please try again.");
     }
   }
 
@@ -133,7 +136,7 @@ const OnboardHire = () => {
           <Input
             type="text"
             placeholder="Enter role..."
-            {...register("role", { required: "*role is required" })}
+            {...register("role", { required: "*Role is required" })}
           />
         </div>
 

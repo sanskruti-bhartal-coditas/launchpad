@@ -1,0 +1,66 @@
+@use "../../../css/theme" as *;
+
+.modalBackDrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  @include grid-center
+}
+
+.modal {
+  background-color: $background;
+  padding: 2rem 3rem;
+  border-radius: 4px;
+  width: 500px;
+  box-shadow: $box-shadow;
+  border: thin solid $border-color;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.header h2 {
+  color: $first-color;
+  margin: 0;
+}
+
+.inputGroup {
+  @include inputGroup;
+  margin: 1rem 0;
+}
+
+.select {
+  background-color: $input;
+  color: $black;
+  border: thin solid $grey;
+  padding: 0.5rem;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.buttonGroup {
+ @include flex-center;
+ gap: 1rem;
+  margin-top: 2rem;
+}
+
+.label {
+  display: 
+}
+
+.errorMessage {
+  @include error-message;
+}
+
+.successMessage {
+  @include success-message;
+  text-align: center;
+  margin-bottom: 1rem;
+}
