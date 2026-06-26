@@ -1,0 +1,46 @@
+@use "../../../css/theme" as *;
+
+.background{
+  @include grid-center;
+  width: 50%;
+  background-color: $background;
+  border: thin solid $border-color;
+  box-shadow: $box-shadow;
+  border-radius: 4px;
+}
+
+.form{
+  padding: 2rem 6rem;
+}
+.select {
+  background-color: $input;
+  color: $black;
+  border: thin solid $grey;
+  padding: 0.25rem;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.heading{
+  color: $first-color;
+}
+
+.errorMessage{
+  @include error-message;
+}
+
+.inputGroup{
+  @include inputGroup;
+}
+
+.buttonGroup{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.successMessage {
+  @include success-message;
+  text-align: center;
+  margin-top: 0.5rem;
+}

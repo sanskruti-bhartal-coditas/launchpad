@@ -1,0 +1,37 @@
+@use "../../../css/theme" as *;
+
+.card {
+  background-color: $background;
+  border: thin solid $border-color;
+  border-radius: 4px;
+  padding: 1.5rem;
+  box-shadow: $box-shadow;
+  cursor: pointer;
+  border-collapse: collapse;
+
+  &:hover {
+    @include jump-effect;
+    border-color: $fourth-color;
+  }
+}
+
+.header {
+  align-items: center;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid $light-grey;
+  padding-bottom: 0.5rem;
+}
+
+.header h3 {
+  color: $fourth-color;
+  margin: 0;
+}
+
+.details {
+  color: $grey;
+  font-size: 0.9rem;
+}
+
+.details p {
+  margin-bottom: 0.5rem;
+}

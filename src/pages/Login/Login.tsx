@@ -4,8 +4,19 @@ import Input from "../../components/Input/Input";
 import styles from "./Login.module.scss";
 import type { LoginInterface } from "./Login.types";
 import { useLoginMutation } from "./Login.services";
+import { useNavigate } from "react-router-dom";
+import { getUserData } from "../../services/getUserData.services";
+import { saveUserData } from "../../redux/authSlice";
+import { useDispatch } from "react-redux";
+
+const ROLE_ROUTES: Record<string, string> = {
+  "MANAGER": "/dashboard",
+};
 
 const Login = () => {
+
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   // redux hooks
   const [login, loginState] = useLoginMutation()
@@ -20,12 +31,24 @@ const Login = () => {
   })
 
   // handlers 
-  const onSubmit = async(data:LoginInterface) => {
-    const response = await login(data)
-    console.log(response.data)
+  const onSubmit = async (userData: LoginInterface) => {
 
-    //store accesstoken here
-  }
+    try {
+      const response = await login(userData).unwrap();
+      localStorage.setItem('accessToken', JSON.stringify(response.accessToken))
+
+      const userDetails = await getUserData();
+
+      dispatch(saveUserData(userDetails))
+
+      if (userDetails.role) {
+        navigate(ROLE_ROUTES[userDetails.role]);
+      }
+    } catch (error) {
+      console.log("Login failed");
+
+    }
+  };
 
   return (
     <section className={styles.background}>
@@ -41,13 +64,6 @@ const Login = () => {
           <div className={styles.inputGroup}>
 
             {/* validation messages */}
-            <div >
-              {errors.email &&
-                <p className={styles.errorMessage}>
-                  {errors.email.message}
-                </p>
-              }
-            </div>
 
             <Input
               type="email"
@@ -61,6 +77,13 @@ const Login = () => {
                   }
                 })}
             />
+            <div >
+              {errors.email &&
+                <p className={styles.errorMessage}>
+                  {errors.email.message}
+                </p>
+              }
+            </div>
           </div>
 
           <div className={styles.inputGroup}>
@@ -70,10 +93,6 @@ const Login = () => {
               {...register("password",
                 {
                   required: "*Password is required",
-                  maxLength: {
-                    value: 6,
-                    message: "*Minimum password length is 6"
-                  }
                 })}
             />
             {/* error messages  */}
@@ -81,9 +100,11 @@ const Login = () => {
               {errors.password &&
                 <p className={styles.errorMessage}>{errors.password.message}</p>
               }
-              {loginState.isError && 
-                <p className={styles.errorMessage}>{loginState.data?.error.message}</p>
-              }
+              {loginState.isError && (
+                <p className={styles.errorMessage}>
+                  Login failed
+                </p>
+              )}
             </div>
           </div>
 
