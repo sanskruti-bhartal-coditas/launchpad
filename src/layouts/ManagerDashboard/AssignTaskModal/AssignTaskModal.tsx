@@ -18,13 +18,13 @@ const AssignTaskModal = ({ hireId, onClose }: AssignTaskModalProps) => {
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm<AssignTask>({
     defaultValues: {
-      hireId: hireId, 
+      hireId: hireId,
       title: "",
       type: "ACKNOWLEDGEMENT",
       dueAt: "",
-      order:0,
-      approverRole:'',
-      requiresApproval:false
+      order: 0,
+      approverRole: '',
+      requiresApproval: false
     }
   });
 
@@ -33,21 +33,21 @@ const AssignTaskModal = ({ hireId, onClose }: AssignTaskModalProps) => {
     try {
       await assignTask(data).unwrap();
       setSuccessMsg("Task assigned successfully!");
-      
+
       setTimeout(() => {
         reset();
         onClose();
       }, 1500);
 
     } catch (err) {
-      setErrorMsg( "Failed to assign task. Please try again.");
+      setErrorMsg("Failed to assign task. Please try again.");
     }
   };
 
   return (
     <div className={styles.modalBackDrop}>
       <div className={styles.modal}>
-        
+
         <div className={styles.header}>
           <h2>Assign Custom Task</h2>
         </div>
@@ -56,7 +56,7 @@ const AssignTaskModal = ({ hireId, onClose }: AssignTaskModalProps) => {
         {errorMsg && <p className={styles.errorMessage}>{errorMsg}</p>}
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          
+
           <div className={styles.inputGroup}>
             <label className={styles.label} htmlFor="title">Task title</label>
             <Input
@@ -78,10 +78,10 @@ const AssignTaskModal = ({ hireId, onClose }: AssignTaskModalProps) => {
           </div>
 
           <div className={styles.inputGroup}>
-            <label className={styles.label} htmlFor="type">Select</label>
-            <select className={styles.select} 
-            // defaultValue="select-type"
-            {...register("type", { required: "*Type is required" })}>
+            <label className={styles.label} htmlFor="type">Select type</label>
+            <select className={styles.select}
+              // defaultValue="select-type"
+              {...register("type", { required: "*Type is required" })}>
               {/* <option value="select-type" disabled>Select type</option> */}
               <option value="ACKNOWLEDGEMENT">Acknowledgement</option>
               <option value="UPLOAD">Document Upload</option>
@@ -91,7 +91,7 @@ const AssignTaskModal = ({ hireId, onClose }: AssignTaskModalProps) => {
           </div>
 
           <div className={styles.inputGroup}>
-            <label className={styles.label} htmlFor="dueAt">Due At :</label>
+            <label className={styles.label} htmlFor="dueAt">Due At</label>
             <Input
               type="date"
               {...register("dueAt", { required: "*Due Date is required" })}
@@ -99,11 +99,41 @@ const AssignTaskModal = ({ hireId, onClose }: AssignTaskModalProps) => {
             {errors.dueAt && <p className={styles.errorMessage}>{errors.dueAt.message}</p>}
           </div>
 
+          <div className={styles.inputGroup}>
+            <label className={styles.label} htmlFor="requiresApproval">Requires Approval</label>
+            
+            <label htmlFor="">Yes</label>
+            <input name="approval" type="radio" value="true" />
+
+            <label htmlFor="">No</label>
+            <input name="approval" type="radio" value="false" />
+            {errors.requiresApproval && <p className={styles.errorMessage}>{errors.requiresApproval.message}</p>}
+          </div>
+
+          <div className={styles.inputGroup}>
+            <label className={styles.label} htmlFor="approverRole">Approver's Role</label>
+            <select className={styles.select}
+              {...register("approverRole", { required: "*Select approver's role" })}>
+              <option value="MANAGER">Manager</option>
+              <option value="HR">HR</option>
+            </select>
+            {errors.approverRole && <p className={styles.errorMessage}>{errors.approverRole.message}</p>}
+          </div>
+
+          <div className={styles.inputGroup}>
+            <label className={styles.label} htmlFor="config">Config</label>
+            <Input
+              type="text"
+              {...register("config", { required: "*Enter configurations for the hire" })}
+            />
+            {errors.config && <p className={styles.errorMessage}>{errors.config.message}</p>}
+          </div>
+
           <div className={styles.buttonGroup}>
-             <SecondaryButton type="button" onClick={onClose}>Cancel</SecondaryButton>
-             <PrimaryButton type="submit" disabled={isLoading}>
-               {isLoading ? "Saving..." : "Assign Task"}
-             </PrimaryButton>
+            <SecondaryButton type="button" onClick={onClose}>Cancel</SecondaryButton>
+            <PrimaryButton type="submit" disabled={isLoading}>
+              {isLoading ? "Saving..." : "Assign Task"}
+            </PrimaryButton>
           </div>
 
         </form>

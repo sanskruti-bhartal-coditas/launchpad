@@ -20,9 +20,7 @@
 }
 
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include flex-center;
   margin-bottom: 1.5rem;
 }
 
@@ -32,8 +30,10 @@
 }
 
 .inputGroup {
-  @include inputGroup;
+ display: flex;
+ gap: 1rem;
   margin: 1rem 0;
+  font-size: 0.9em;
 }
 
 .select {
@@ -51,9 +51,10 @@
   margin-top: 2rem;
 }
 
-.label {
-  display: 
-}
+// .inputGroup .label {
+//   display: flex;
+//   align-items: flex-start
+// }
 
 .errorMessage {
   @include error-message;

@@ -19,6 +19,9 @@ const SideBar = () => {
 
   const handleLogout = () => {
     dispatch(logout())
+    localStorage.removeItem('role')
+    localStorage.removeItem('accessToken')
+    navigate("/")
   }
 
   const handleHireStats = () =>{
